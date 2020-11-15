@@ -4,10 +4,6 @@
     https://solidity.readthedocs.io/en/v0.6.12/060-breaking-changes.html
 */
 pragma solidity ^0.6.12;
-=======
-
-pragma solidity ^0.5.0;
->>>>>>> af2995e8d08fa27716a1374391746893e6505ed9
 
 contract SimpleBank {
 
@@ -49,7 +45,7 @@ contract SimpleBank {
     // Typically, called when invalid data is sent
     // Added so ether sent to this contract is reverted if the contract fails
     // otherwise, the sender's money is transferred to contract
-    function () external payable {
+    fallback() external payable {
         revert();
     }
 
@@ -78,7 +74,7 @@ contract SimpleBank {
     // Emit the appropriate event    
     // Users should be enrolled before they can make deposits
     function deposit() public payable returns (uint) {
-        require(enrolled[msg.sender]==true); 
+        require(enrolled[msg.sender]==true, "you dun fucked up. must be enrolled first!"); 
         balances[msg.sender] += msg.value; 
         emit LogDepositMade (msg.sender, balances[msg.sender]); 
         return balances[msg.sender]; 
